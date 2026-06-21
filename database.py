@@ -142,3 +142,31 @@ def preload_records():
 
 create_table()
 preload_records()
+
+def update_record(record_id, name, gender, status, contact):
+
+    conn = sqlite3.connect("business.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE records
+        SET full_name=?, gender=?, status=?, contact=?
+        WHERE id=?
+    """, (name, gender, status, contact, record_id))
+
+    conn.commit()
+    conn.close()
+
+
+def delete_record(record_id):
+
+    conn = sqlite3.connect("business.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM records WHERE id=?",
+        (record_id,)
+    )
+
+    conn.commit()
+    conn.close()
